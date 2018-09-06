@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingStart="8sp"
+    android:paddingEnd="8sp">
+
+    <ImageView
+        android:id="@+id/iv_country_flag_adapter"
+        android:layout_width="34sp"
+        android:layout_height="34sp"
+        android:layout_margin="2sp"
+        android:background="@color/colorPrimaryDark"/>
+
+    <TextView
+        android:id="@+id/tv_code_phone"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2sp"
+        android:textSize="16sp"/>
+
+</LinearLayout>
