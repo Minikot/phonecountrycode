@@ -1,6 +1,8 @@
 package com.aleksandr.phonecountrycode;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.aleksandr.phonecountrycode.model.CodeFactory;
 import com.aleksandr.phonecountrycode.model.CountryCode;
 
 import java.util.ArrayList;
@@ -15,10 +18,13 @@ import java.util.ArrayList;
 public class CountryCodeAdapter extends RecyclerView.Adapter<CountryCodeAdapter.ViewHolder> {
 
     private ArrayList<CountryCode> countryCodes;
+    FragmentManager fragmentManager;
+    Context context;
 
-    public CountryCodeAdapter(ArrayList<CountryCode> countryCodes) {
+    public CountryCodeAdapter(ArrayList<CountryCode> countryCodes, FragmentManager fragmentManager, Context context) {
         this.countryCodes = countryCodes;
-        notifyDataSetChanged();
+        this.fragmentManager = fragmentManager;
+        this.context = context;
     }
 
     public void dataUpdate(ArrayList<CountryCode> countryCodes) {
@@ -38,7 +44,7 @@ public class CountryCodeAdapter extends RecyclerView.Adapter<CountryCodeAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-holder.bindTo(countryCodes.get(holder.getAdapterPosition()));
+        holder.bindTo(countryCodes.get(holder.getAdapterPosition()));
     }
 
     @Override
@@ -48,20 +54,38 @@ holder.bindTo(countryCodes.get(holder.getAdapterPosition()));
 
     class ViewHolder extends RecyclerView.ViewHolder {
         ImageView ivFlag;
+        TextView tvCountry;
         TextView tvCode;
+        View container;
 
         public ViewHolder(View itemView) {
             super(itemView);
-
             ivFlag = itemView.findViewById(R.id.iv_country_flag_adapter);
+            tvCountry = itemView.findViewById(R.id.tv_country);
             tvCode = itemView.findViewById(R.id.tv_code_phone);
+            container = itemView;
         }
 
-        private void bindTo(final CountryCode countryCode){
-        tvCode.setText(countryCode.getName() + " " +
-                        countryCode.getCode() + " " +
-                        countryCode.getDigits() + " " +
-                        countryCode.getIso());
+        private void bindTo(final CountryCode countryCode) {
+            final int resId = countryCode.resId = context.getResources().getIdentifier("ic_" + countryCode.getIso(), "drawable", context.getPackageName());
+            ivFlag.setImageResource(resId);
+
+            tvCountry.setText(countryCode.getName());
+
+            tvCode.setText("+ " + countryCode.getCode());
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    System.out.println(resId);
+                    CodeFactory.getCountryCodeDAO().setCode(tvCode.getText().toString());
+                    CodeFactory.getCountryCodeDAO().setResId(resId);
+                    CodeFactory.getCountryCodeDAO().dackTo(fragmentManager);
+                    CodeFactory.getCountryCodeDAO().getCodesArrayFiltered().
+                            removeAll(CodeFactory.getCountryCodeDAO().getCodesArrayFiltered());
+                }
+            });
         }
+
     }
 }

@@ -1,11 +1,15 @@
 package com.aleksandr.phonecountrycode.model;
 
+import android.support.annotation.DrawableRes;
+
 public class CountryCode {
 
     private String name;
     private int code;
     private int digits;
     private String iso;
+    private @DrawableRes int image;
+    public int resId;
 
     public CountryCode(String name, int code, int digits, String iso) {
         this.name = name;
@@ -44,5 +48,13 @@ public class CountryCode {
 
     public void setIso(String iso) {
         this.iso = iso;
+    }
+
+    public int getImage() {
+        return image;
+    }
+
+    public void setImage(int image) {
+        this.image = image;
     }
 }
