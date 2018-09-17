@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
+import com.aleksandr.phonecountrycode.model.CountryCodeBL;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -18,5 +20,8 @@ public class MainActivity extends AppCompatActivity {
         MainFragment mainFragment = new MainFragment();
         ft.add(R.id.container, mainFragment, "mainFragment");
         ft.commit();
+
+        CountryCodeBL.getInstance().loadGradle(this);
+        CountryCodeBL.getInstance().getCountries();
     }
 }

@@ -1,6 +1,4 @@
-{
-  "code":{
-            "list": [
+[
 {"name":"SAT, GMSS", "code":881, "digits":[9], "iso_3166_1":"00"},
 {"name":"SAT, Inmarsat", "code":870, "digits":[9], "iso_3166_1":"00"},
 {"name":"Ascension Island", "code":247, "digits":[4], "iso_3166_1":"ac"},
@@ -244,4 +242,4 @@
 {"name":"South Africa", "code":27, "digits":[9], "iso_3166_1":"za"},
 {"name":"Zambia", "code":260, "digits":[9], "iso_3166_1":"zm"},
 {"name":"Zimbabwe", "code":263, "digits":[5, 6, 7, 8, 9, 10], "iso_3166_1":"zw"}
-]}}
+]

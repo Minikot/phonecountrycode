@@ -5,38 +5,31 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.text.Editable;
-import android.text.TextWatcher;
 
-import com.aleksandr.phonecountrycode.CountryCodeAdapter;
 import com.aleksandr.phonecountrycode.MainFragment;
 import com.aleksandr.phonecountrycode.R;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.List;
 
-public class CountryCodeBL implements CountryCodeDAO {
+public class CountryCodeBL{
 
     private int resId;
-    private String code = null;
+    private String code;
+    private String jsonData;
 
     private static CountryCodeBL instance = null;
+
     public static CountryCodeBL getInstance() {
         if (instance == null) {
             instance = new CountryCodeBL();
         }
         return instance;
-    }
-
-    public ArrayList<CountryCode> codesArrayFiltered = new ArrayList<>();
-
-    public ArrayList<CountryCode> getCodesArrayFiltered() {
-        return codesArrayFiltered;
     }
 
     public int getResId() {
@@ -55,130 +48,81 @@ public class CountryCodeBL implements CountryCodeDAO {
         this.code = code;
     }
 
-    public void getFilterListCodes(Context appContext, String str) {
-        filterListCodes(jsonData, str);
+
+    public List<CountryCode> countryWorkList;
+
+    private ArrayList<CountryCode> codesArrayFiltered = new ArrayList<>();
+
+    public ArrayList<CountryCode> getCodesArrayFiltered() {
+        return codesArrayFiltered;
     }
 
-    private String jsonData;
-
-    //Метод вызывается при старте второго фрагмента, считывает данные и помещает в стрингу.
-    // Метод filterListCodes(String json, String st) будет обращаться к переменной, а не постоянно к данным во время фильтрации списка.
     public void loadGradle(Context appContext) {
-
         Resources res = appContext.getResources();
         InputStream is = res.openRawResource(R.raw.e164_country_codes);
-        Scanner scanner = new Scanner(is);
-        StringBuilder builder = new StringBuilder();
-        while (scanner.hasNextLine()) {
-            builder.append((scanner.nextLine()));
-        }
-        jsonData = builder.toString();
-    }
-
-    private String parseJsonCountryCode(String json) {
-        StringBuilder builder = new StringBuilder();
-        try {
-            JSONObject root = new JSONObject(json);
-            JSONObject countryCodes = root.getJSONObject("code");
-            JSONArray lists = countryCodes.getJSONArray("list");
-
-            for (int i = 0; i < lists.length(); i++) {
-                JSONObject list = lists.optJSONObject(i);
-                builder.append(list.getString("name"))
-                        .append(": ")
-                        .append(list.getInt("code"))
-                        .append(": ")
-                        .append(list.getString("digits"))
-                        .append(": ")
-                        .append(list.getString("iso_3166_1"))
-                        .append("\n");
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return builder.toString();
-    }
-
-    public void filterListCodes(String json, String st) {
 
         try {
-            JSONObject root = new JSONObject(json);
-            JSONObject countryCodes = root.getJSONObject("code");
-            JSONArray lists = countryCodes.getJSONArray("list");
-
-            boolean isContain = true;
-
-            if (st == null) {
-                for (int i = 0; i < lists.length(); i++) {
-                    codesArrayFiltered.add(new CountryCode(
-                            lists.optJSONObject(i).getString("name"),
-                            lists.optJSONObject(i).getInt("code"),
-                            0,
-                            lists.optJSONObject(i).getString("iso_3166_1")));
-                }
-
-            } else if (st != null) {
-                for (int i = 0; i < lists.length(); i++) {
-                    try {
-                        int num = Integer.parseInt(st);
-                        isContain = lists.optJSONObject(i).getString("code").contains(String.valueOf(num));
-                        System.out.println("It is a number");
-
-                    } catch (NumberFormatException e) {
-                        isContain = lists.optJSONObject(i).getString("name").toLowerCase().contains(st.toLowerCase());
-                        System.out.println("It is no a number");
-                    }
-
-                    if (isContain) {
-                        codesArrayFiltered.add(new CountryCode(
-                                lists.optJSONObject(i).getString("name"),
-                                lists.optJSONObject(i).getInt("code"),
-                                0,
-                                lists.optJSONObject(i).getString("iso_3166_1")));
-                    } else {
-
-                    }
-                }
-            }
-        } catch (JSONException e) {
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            jsonData = new String(buffer, "UTF-8");
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public TextWatcher getTextWatcher(final CountryCodeAdapter adapter, final Context appContext, final String str) {
-
-        TextWatcher textWatcher = new TextWatcher() {
-
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                codesArrayFiltered.removeAll(codesArrayFiltered);
-                adapter.dataUpdate(getCodesArrayFiltered());
-            }
-
-            public void afterTextChanged(Editable s) {
-                if (s.length() == 0) {
-                    System.out.println("ZERO");
-                    getFilterListCodes(appContext, str);
-                    adapter.dataUpdate(codesArrayFiltered);
-
-                } else {
-                    System.out.println("FUUUUUUUCK");
-                    getFilterListCodes(appContext, str);
-                    adapter.dataUpdate(codesArrayFiltered);
-                }
-            }
-        };
-        return textWatcher;
+    public void getCountries() {
+        Gson gson = new Gson();
+        String jsonOutput = jsonData;
+        Type listType = new TypeToken<List<CountryCode>>() {
+        }.getType();
+        countryWorkList = gson.fromJson(jsonOutput, listType);
     }
 
-    public void dackTo(FragmentManager fragmentManager) {
+    public void filterListCodesArray(String st) {
+        boolean isContain;
+        if (st == null) {
+            for (int i = 0; i < countryWorkList.size(); i++) {
+                codesArrayFiltered.add(new CountryCode(
+                        countryWorkList.get(i).getName(),
+                        countryWorkList.get(i).getCode(),
+                        countryWorkList.get(i).getDigits(),
+                        countryWorkList.get(i).getIso()));
+            }
+        } else {
+
+            for (int i = 0; i < countryWorkList.size(); i++) {
+                try {
+                    int num = Integer.parseInt(st);
+                    String code = String.valueOf(countryWorkList.get(i).getCode());
+                    isContain = code.contains(st);
+
+                } catch (NumberFormatException e) {
+                    String name = countryWorkList.get(i).getName().toLowerCase();
+                    isContain = name.contains(st.toLowerCase());
+                }
+
+                if (isContain) {
+                    codesArrayFiltered.add(
+                            new CountryCode(
+                                    countryWorkList.get(i).getName(),
+                                    countryWorkList.get(i).getCode(),
+                                    countryWorkList.get(i).getDigits(),
+                                    countryWorkList.get(i).getIso()));
+                }
+            }
+        }
+    }
+
+//    public TextWatcher getTextWatcher(   -   Как TextWatcher можно использовать из этого класса?
+
+    public void backTo(FragmentManager fragmentManager) {
         FragmentTransaction ft = fragmentManager.beginTransaction();
         MainFragment mainFragment = new MainFragment();
         Bundle args = new Bundle();
         args.putString(MainFragment.CODE, getCode());
-        args.putInt(MainFragment.RES_ID, resId);
+        args.putInt(MainFragment.RES_ID, getResId());
         mainFragment.setArguments(args);
 
         ft.replace(R.id.container, mainFragment, "mainFragment");
@@ -187,3 +131,5 @@ public class CountryCodeBL implements CountryCodeDAO {
         ft.commit();
     }
 }
+
+

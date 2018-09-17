@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.aleksandr.phonecountrycode.model.CodeFactory;
 import com.aleksandr.phonecountrycode.model.CountryCode;
+import com.aleksandr.phonecountrycode.model.CountryCodeBL;
 
 import java.util.ArrayList;
 
@@ -77,12 +77,12 @@ public class CountryCodeAdapter extends RecyclerView.Adapter<CountryCodeAdapter.
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    System.out.println(resId);
-                    CodeFactory.getCountryCodeDAO().setCode(tvCode.getText().toString());
-                    CodeFactory.getCountryCodeDAO().setResId(resId);
-                    CodeFactory.getCountryCodeDAO().dackTo(fragmentManager);
-                    CodeFactory.getCountryCodeDAO().getCodesArrayFiltered().
-                            removeAll(CodeFactory.getCountryCodeDAO().getCodesArrayFiltered());
+                    CountryCodeBL.getInstance().setCode(tvCode.getText().toString());
+                    CountryCodeBL.getInstance().setResId(resId);
+
+                    CountryCodeBL.getInstance().backTo(fragmentManager);
+                    CountryCodeBL.getInstance().getCodesArrayFiltered().
+                            removeAll(CountryCodeBL.getInstance().getCodesArrayFiltered());
                 }
             });
         }

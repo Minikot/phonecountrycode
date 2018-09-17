@@ -1,17 +1,19 @@
 package com.aleksandr.phonecountrycode.model;
 
-import android.support.annotation.DrawableRes;
+import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
 
 public class CountryCode {
 
     private String name;
     private int code;
-    private int digits;
+    private ArrayList<Integer> digits;
+    @SerializedName("iso_3166_1")
     private String iso;
-    private @DrawableRes int image;
     public int resId;
 
-    public CountryCode(String name, int code, int digits, String iso) {
+    public CountryCode(String name, int code, ArrayList<Integer> digits, String iso) {
         this.name = name;
         this.code = code;
         this.digits = digits;
@@ -30,31 +32,11 @@ public class CountryCode {
         return code;
     }
 
-    public void setCode(int code) {
-        this.code = code;
-    }
-
-    public int getDigits() {
-        return digits;
-    }
-
-    public void setDigits(int digits) {
-        this.digits = digits;
-    }
-
     public String getIso() {
         return iso;
     }
 
-    public void setIso(String iso) {
-        this.iso = iso;
-    }
-
-    public int getImage() {
-        return image;
-    }
-
-    public void setImage(int image) {
-        this.image = image;
+    public ArrayList<Integer> getDigits() {
+        return digits;
     }
 }

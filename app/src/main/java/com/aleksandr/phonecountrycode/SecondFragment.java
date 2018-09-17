@@ -14,8 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import com.aleksandr.phonecountrycode.model.CodeFactory;
 import com.aleksandr.phonecountrycode.model.CountryCode;
+import com.aleksandr.phonecountrycode.model.CountryCodeBL;
 
 import java.util.ArrayList;
 
@@ -34,14 +34,14 @@ public class SecondFragment extends Fragment {
         etFilterText = view.findViewById(R.id.et_filter_code_fragment);
         etFilterText.addTextChangedListener(getTextWatcher());
 
-        CodeFactory.getCountryCodeDAO().getFilterListCodes(getContext(), etFilterText.getText().toString());
+        CountryCodeBL.getInstance().filterListCodesArray(etFilterText.getText().toString());
 
         rvCodeList = view.findViewById(R.id.rv_phone_code_fragment);
         adapter = new CountryCodeAdapter(new ArrayList<CountryCode>(), getFragmentManager(), getContext());
         rvCodeList.setLayoutManager(new LinearLayoutManager(getContext()));
         rvCodeList.setAdapter(adapter);
 
-        adapter.dataUpdate(CodeFactory.getCountryCodeDAO().getCodesArrayFiltered());
+        adapter.dataUpdate(CountryCodeBL.getInstance().getCodesArrayFiltered());
         return view;
     }
 
@@ -54,18 +54,14 @@ public class SecondFragment extends Fragment {
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                CodeFactory.getCountryCodeDAO().getCodesArrayFiltered().
-                        removeAll(CodeFactory.getCountryCodeDAO().
+                CountryCodeBL.getInstance().getCodesArrayFiltered().
+                        removeAll(CountryCodeBL.getInstance().
                                 getCodesArrayFiltered());
             }
 
             public void afterTextChanged(Editable s) {
-//                if (s.length() == 0) {
-//                    CodeFactory.getCountryCodeDAO().getFilterListCodes(getContext(), s.toString());
-//                    adapter.dataUpdate(CodeFactory.getCountryCodeDAO().getCodesArrayFiltered());
-//                } else {
-                    CodeFactory.getCountryCodeDAO().getFilterListCodes(getContext(), s.toString());
-                    adapter.dataUpdate(CodeFactory.getCountryCodeDAO().getCodesArrayFiltered());
+                    CountryCodeBL.getInstance().filterListCodesArray(s.toString());
+                    adapter.dataUpdate(CountryCodeBL.getInstance().getCodesArrayFiltered());
             }
         };
         return textWatcher;

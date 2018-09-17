@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.aleksandr.phonecountrycode.model.CodeFactory;
+import com.aleksandr.phonecountrycode.model.CountryCodeBL;
 
 public class MainFragment extends Fragment {
     public static final String CODE = "code";
@@ -44,16 +44,17 @@ public class MainFragment extends Fragment {
                 ft.addToBackStack(null);
                 ft.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out);
                 ft.commit();
-
-                CodeFactory.getCountryCodeDAO().loadGradle(getContext());
+                CountryCodeBL.getInstance().loadGradle(getContext());
             }
         });
 
         Bundle args = getArguments();
         if (args == null) {
             ivCountryFlag.setImageResource(R.drawable.ic_flag_black_24dp);
+            ivCountryFlag.setImageResource(R.drawable.ic_be);
+
         } else {
-            etCodePhone.setText(args.getString(CODE));
+            etCodePhone.setText(args.getString("code"));
             ivCountryFlag.setImageResource(args.getInt(RES_ID));
         }
         return view;
