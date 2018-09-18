@@ -1,35 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorMenuBg"
     android:orientation="vertical"
-    android:padding="8sp"
-    android:background="@color/colorMenuBg">
+    android:padding="8sp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginTop="16sp"
-        >
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/iv_country_flag_fragment"
-            android:layout_gravity="center"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            />
+            android:layout_gravity="center" />
 
         <EditText
             android:id="@+id/et_code_phone_fragment"
-            android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="8sp"
+            android:layout_gravity="center"
             android:inputType="phone"
+            android:paddingStart="8sp"
             android:textColor="@color/colorText"
-            tools:text="+ 0 0 (000) 000 00 00"/>
+            tools:text="+ 0 0 (000) 000 00 00" />
 
     </LinearLayout>
 
@@ -37,7 +36,6 @@
         android:id="@+id/btn_list_country"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Select a country"
-        />
+        android:text="Select a country" />
 
 </LinearLayout>

@@ -51,7 +51,6 @@ public class MainFragment extends Fragment {
         Bundle args = getArguments();
         if (args == null) {
             ivCountryFlag.setImageResource(R.drawable.ic_flag_black_24dp);
-            ivCountryFlag.setImageResource(R.drawable.ic_be);
 
         } else {
             etCodePhone.setText(args.getString("code"));
