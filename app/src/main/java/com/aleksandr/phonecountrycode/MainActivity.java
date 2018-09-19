@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
-import com.aleksandr.phonecountrycode.model.CountryCodeBL;
+import com.aleksandr.phonecountrycode.model.CountryCodeRepository;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,12 +16,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
+
         FragmentTransaction ft = fragmentManager.beginTransaction();
         MainFragment mainFragment = new MainFragment();
         ft.add(R.id.container, mainFragment, "mainFragment");
         ft.commit();
 
-        CountryCodeBL.getInstance().loadGradle(this);
-        CountryCodeBL.getInstance().getCountries();
+        CountryCodeRepository.getInstance().loadGradle(this);
+        CountryCodeRepository.getInstance().getCountries();
     }
 }

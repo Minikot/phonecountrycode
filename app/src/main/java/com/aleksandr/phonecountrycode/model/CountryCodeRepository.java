@@ -17,17 +17,17 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CountryCodeBL{
+public class CountryCodeRepository {
 
     private int resId;
     private String code;
     private String jsonData;
 
-    private static CountryCodeBL instance = null;
+    private static CountryCodeRepository instance = null;
 
-    public static CountryCodeBL getInstance() {
+    public static CountryCodeRepository getInstance() {
         if (instance == null) {
-            instance = new CountryCodeBL();
+            instance = new CountryCodeRepository();
         }
         return instance;
     }
@@ -107,7 +107,7 @@ public class CountryCodeBL{
                     codesArrayFiltered.add(
                             new CountryCode(
                                     countryWorkList.get(i).getName(),
-                                    "+ " + countryWorkList.get(i).getCode(),
+                                    countryWorkList.get(i).getCode(),
                                     countryWorkList.get(i).getDigits(),
                                     countryWorkList.get(i).getIso()));
                 }

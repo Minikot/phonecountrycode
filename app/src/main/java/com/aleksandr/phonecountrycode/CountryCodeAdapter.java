@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.aleksandr.phonecountrycode.model.CountryCode;
-import com.aleksandr.phonecountrycode.model.CountryCodeBL;
+import com.aleksandr.phonecountrycode.model.CountryCodeRepository;
 
 import java.util.ArrayList;
 
@@ -72,17 +72,17 @@ public class CountryCodeAdapter extends RecyclerView.Adapter<CountryCodeAdapter.
 
             tvCountry.setText(countryCode.getName());
 
-            tvCode.setText(countryCode.getCode());
+            tvCode.setText("+ " + countryCode.getCode());
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    CountryCodeBL.getInstance().setCode(tvCode.getText().toString());
-                    CountryCodeBL.getInstance().setResId(resId);
+                    CountryCodeRepository.getInstance().setCode(tvCode.getText().toString());
+                    CountryCodeRepository.getInstance().setResId(resId);
 
-                    CountryCodeBL.getInstance().backTo(fragmentManager);
-                    CountryCodeBL.getInstance().getCodesArrayFiltered().
-                            removeAll(CountryCodeBL.getInstance().getCodesArrayFiltered());
+                    CountryCodeRepository.getInstance().backTo(fragmentManager);
+                    CountryCodeRepository.getInstance().getCodesArrayFiltered().
+                            removeAll(CountryCodeRepository.getInstance().getCodesArrayFiltered());
                 }
             });
         }
