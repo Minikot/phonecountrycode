@@ -72,7 +72,7 @@ public class CountryCodeAdapter extends RecyclerView.Adapter<CountryCodeAdapter.
 
             tvCountry.setText(countryCode.getName());
 
-            tvCode.setText("+ " + countryCode.getCode());
+            tvCode.setText(countryCode.getCode());
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

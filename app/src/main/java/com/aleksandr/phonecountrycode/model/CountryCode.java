@@ -7,13 +7,13 @@ import java.util.ArrayList;
 public class CountryCode {
 
     private String name;
-    private int code;
+    private String code;
     private ArrayList<Integer> digits;
     @SerializedName("iso_3166_1")
     private String iso;
     public int resId;
 
-    public CountryCode(String name, int code, ArrayList<Integer> digits, String iso) {
+    public CountryCode(String name, String code, ArrayList<Integer> digits, String iso) {
         this.name = name;
         this.code = code;
         this.digits = digits;
@@ -28,7 +28,7 @@ public class CountryCode {
         this.name = name;
     }
 
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 

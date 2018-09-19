@@ -107,7 +107,7 @@ public class CountryCodeBL{
                     codesArrayFiltered.add(
                             new CountryCode(
                                     countryWorkList.get(i).getName(),
-                                    countryWorkList.get(i).getCode(),
+                                    "+ " + countryWorkList.get(i).getCode(),
                                     countryWorkList.get(i).getDigits(),
                                     countryWorkList.get(i).getIso()));
                 }
