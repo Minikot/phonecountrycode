@@ -8,14 +8,14 @@
     android:paddingEnd="8sp">
 
     <ImageView
-        android:id="@+id/iv_country_flag_adapter"
+        android:id="@+id/iv_dialog_country_flag_adapter"
         android:layout_width="34sp"
         android:layout_height="34sp"
         android:layout_margin="2sp"
         />
 
     <TextView
-        android:id="@+id/tv_code_phone"
+        android:id="@+id/tv_dialog_code_phone"
         android:layout_gravity="center"
         android:layout_weight="1"
         android:layout_width="0sp"
@@ -26,7 +26,7 @@
         />
 
     <TextView
-        android:id="@+id/tv_country"
+        android:id="@+id/tv_dialog_country"
         android:layout_gravity="center"
         android:layout_weight="3"
         android:layout_width="0sp"

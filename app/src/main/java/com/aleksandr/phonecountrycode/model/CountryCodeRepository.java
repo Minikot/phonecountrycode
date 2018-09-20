@@ -2,11 +2,7 @@ package com.aleksandr.phonecountrycode.model;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 
-import com.aleksandr.phonecountrycode.MainFragment;
 import com.aleksandr.phonecountrycode.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -19,8 +15,6 @@ import java.util.List;
 
 public class CountryCodeRepository {
 
-    private int resId;
-    private String code;
     private String jsonData;
 
     private static CountryCodeRepository instance = null;
@@ -31,23 +25,6 @@ public class CountryCodeRepository {
         }
         return instance;
     }
-
-    public int getResId() {
-        return resId;
-    }
-
-    public void setResId(int resId) {
-        this.resId = resId;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
 
     public List<CountryCode> countryWorkList;
 
@@ -90,6 +67,7 @@ public class CountryCodeRepository {
                         countryWorkList.get(i).getDigits(),
                         countryWorkList.get(i).getIso()));
             }
+            System.out.println("if CARL");
         } else {
 
             for (int i = 0; i < countryWorkList.size(); i++) {
@@ -114,22 +92,7 @@ public class CountryCodeRepository {
             }
         }
     }
-
 //    public TextWatcher getTextWatcher(   -   Как TextWatcher можно использовать из этого класса?
-
-    public void backTo(FragmentManager fragmentManager) {
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-        MainFragment mainFragment = new MainFragment();
-        Bundle args = new Bundle();
-        args.putString(MainFragment.CODE, getCode());
-        args.putInt(MainFragment.RES_ID, getResId());
-        mainFragment.setArguments(args);
-
-        ft.replace(R.id.container, mainFragment, "mainFragment");
-        ft.addToBackStack(null);
-        ft.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out);
-        ft.commit();
-    }
 }
 
 

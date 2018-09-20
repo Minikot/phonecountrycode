@@ -5,8 +5,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,15 +14,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.aleksandr.phonecountrycode.model.CountryCodeRepository;
+import com.aleksandr.phonecountrycode.model.CountryCode;
 
 public class MainFragment extends Fragment {
-    public static final String CODE = "code";
-    public static final String RES_ID = "resId";
 
     ImageView ivCountryFlag;
     EditText etCodePhone;
-    Button btnListCountry;
     Button btnDialogFragment;
 
     DialogFragment dlgFragment;
@@ -34,52 +31,44 @@ public class MainFragment extends Fragment {
 
         ivCountryFlag = view.findViewById(R.id.iv_country_flag_fragment);
         etCodePhone = view.findViewById(R.id.et_code_phone_fragment);
+        etCodePhone.addTextChangedListener(getTextWatcher());
         dlgFragment = new CountryCodeDialogFragment();
 
-        btnListCountry = view.findViewById(R.id.btn_list_country);
-        btnListCountry.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager fragmentManager = getFragmentManager();
-                CountryCodeFragment countryCodeFragment;
-                FragmentTransaction ft = fragmentManager.beginTransaction();
-                countryCodeFragment = new CountryCodeFragment();
-
-                ft.replace(R.id.container, countryCodeFragment, "countryCodeFragment");
-                ft.addToBackStack(null);
-                ft.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out);
-                ft.commit();
-                CountryCodeRepository.getInstance().loadGradle(getContext());
-            }
-        });
-
+        ivCountryFlag.setImageResource(R.drawable.ic_flag_black_24dp);
 
         btnDialogFragment = view.findViewById(R.id.btn_dialog_fragment);
-        btnDialogFragment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                FragmentManager fragmentManager = getFragmentManager();
-//                CountryCodeDialogFragment countryCodeDialogFragment = new CountryCodeDialogFragment();
-//                FragmentTransaction transaction = fragmentManager.beginTransaction();
-//                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-//                transaction.add(android.R.id.content, countryCodeDialogFragment).addToBackStack(null).commit();
-                showDialog();
-            }
+
+        btnDialogFragment.setOnClickListener(v -> {
+            CountryCodeDialogFragment countryCodeDialogFragment = new CountryCodeDialogFragment();
+            countryCodeDialogFragment.show(getChildFragmentManager(), "dialog");
         });
-
-        Bundle args = getArguments();
-        if (args == null) {
-            ivCountryFlag.setImageResource(R.drawable.ic_flag_black_24dp);
-
-        } else {
-            etCodePhone.setText(args.getString("code"));
-            ivCountryFlag.setImageResource(args.getInt(RES_ID));
-        }
         return view;
     }
 
-    public void showDialog() {
-        CountryCodeDialogFragment countryCodeDialogFragment = new CountryCodeDialogFragment();
-        countryCodeDialogFragment.show(getChildFragmentManager(), "dialog");
+    public void setCode(CountryCode countryCode) {
+        etCodePhone.setText("+ " + String.valueOf(countryCode.getCode()));
+        ivCountryFlag.setImageResource(
+                countryCode.resId = getContext().getResources()
+                        .getIdentifier("ic_" + countryCode.getIso(), "drawable", getContext().getPackageName()));
+    }
+
+    public TextWatcher getTextWatcher() {
+
+        TextWatcher textWatcher = new TextWatcher() {
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            public void afterTextChanged(Editable s) {
+                if (etCodePhone.length() == 0) {
+                    ivCountryFlag.setImageResource(R.drawable.ic_flag_black_24dp);
+                }
+            }
+        };
+        return textWatcher;
     }
 }
