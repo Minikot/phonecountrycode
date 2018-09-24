@@ -47,7 +47,7 @@ public class CountryCodeRepository {
     }
 
     public static void filterListCodesArray(String st) {
-        if (st == null) {
+        if (st.length() == 0) {
             for (int i = 0; i < countryWorkList.size(); i++) {
                 codesArrayFiltered.add(new CountryCode(
                         countryWorkList.get(i).getName(),
@@ -56,7 +56,6 @@ public class CountryCodeRepository {
                         countryWorkList.get(i).getIso()));
             }
         } else {
-
             for (int i = 0; i < countryWorkList.size(); i++) {
                 try {
                     int num = Integer.parseInt(st);
