@@ -12,6 +12,8 @@ import com.aleksandr.phonecountrycode.model.CountryCodeRepository;
 public class MainActivity extends AppCompatActivity implements CountryCodeDialogFragment.CodeSelectedListener {
 
     private MainFragment mainFragment;
+    private FragmentManager fragmentManager = getSupportFragmentManager();
+    private FragmentTransaction ft = fragmentManager.beginTransaction();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -19,15 +21,10 @@ public class MainActivity extends AppCompatActivity implements CountryCodeDialog
         setContentView(R.layout.activity_main);
         mainFragment = new MainFragment();
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-//        MainFragment mainFragment = new MainFragment();
         ft.add(R.id.container, mainFragment, "mainFragment");
         ft.commit();
 
-        CountryCodeRepository.getInstance().loadGradle(this);
-        CountryCodeRepository.getInstance().getCountries();
+        CountryCodeRepository.getCountryFromJson(this);
     }
 
     @Override

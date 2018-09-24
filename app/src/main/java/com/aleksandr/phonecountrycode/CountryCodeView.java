@@ -8,25 +8,24 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.aleksandr.phonecountrycode.model.CountryCode;
+
 public class CountryCodeView extends LinearLayout {
 
-    /**
-     *  Я ПЕРЕДЕЛАЮ ПОТОМ ПОЛНОСТЬЮ. ПРОСТО Я ДУМАЛ, ЧТО НУЖНО ЗАМЕНИТЬ ПОЛНОСТЬЮ ВСЕ ЭЛЕМЕНТЫ АЙТЕМА. НЕ ОБРАЩАЙ ВНИМАНИЕ НА ЭТОТ ВЬЮ
-     */
-    private ImageView ivFlagView;
-    private TextView tvCodeView;
-    private TextView tvCountryView;
+    public ImageView ivFlagView;
+    public TextView tvCodeView;
+    public TextView tvCountryView;
 
     public CountryCodeView(Context context) {
         this(context, null);
     }
 
     public CountryCodeView(Context context, @Nullable AttributeSet attrs) {
-        this(context, null, 0);
+        this(context, attrs, 0);
     }
 
     public CountryCodeView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        this(context, attrs, 0, 0);
+        this(context, attrs, defStyleAttr, 0);
     }
 
     public CountryCodeView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
@@ -43,4 +42,10 @@ public class CountryCodeView extends LinearLayout {
         tvCountryView = findViewById(R.id.tv_country_view);
     }
 
+    public void setView(CountryCode countryCode) {
+        ivFlagView.setImageResource(countryCode.resId = getContext().getResources().
+                getIdentifier("ic_" + countryCode.getIso(), "drawable", getContext().getPackageName()));
+        tvCountryView.setText(countryCode.getName());
+        tvCodeView.setText("+ " + countryCode.getCode());
+    }
 }

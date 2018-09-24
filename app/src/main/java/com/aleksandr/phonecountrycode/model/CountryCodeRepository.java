@@ -15,26 +15,17 @@ import java.util.List;
 
 public class CountryCodeRepository {
 
-    private String jsonData;
+    private static String jsonData;
+    private static boolean isContain;
+    private static List<CountryCode> countryWorkList;
 
-    private static CountryCodeRepository instance = null;
+    private static ArrayList<CountryCode> codesArrayFiltered = new ArrayList<>();
 
-    public static CountryCodeRepository getInstance() {
-        if (instance == null) {
-            instance = new CountryCodeRepository();
-        }
-        return instance;
-    }
-
-    public List<CountryCode> countryWorkList;
-
-    private ArrayList<CountryCode> codesArrayFiltered = new ArrayList<>();
-
-    public ArrayList<CountryCode> getCodesArrayFiltered() {
+    public static ArrayList<CountryCode> getCodesArrayFiltered() {
         return codesArrayFiltered;
     }
 
-    public void loadGradle(Context appContext) {
+    public static void getCountryFromJson(Context appContext) {
         Resources res = appContext.getResources();
         InputStream is = res.openRawResource(R.raw.e164_country_codes);
 
@@ -47,9 +38,7 @@ public class CountryCodeRepository {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
 
-    public void getCountries() {
         Gson gson = new Gson();
         String jsonOutput = jsonData;
         Type listType = new TypeToken<List<CountryCode>>() {
@@ -57,8 +46,7 @@ public class CountryCodeRepository {
         countryWorkList = gson.fromJson(jsonOutput, listType);
     }
 
-    public void filterListCodesArray(String st) {
-        boolean isContain;
+    public static void filterListCodesArray(String st) {
         if (st == null) {
             for (int i = 0; i < countryWorkList.size(); i++) {
                 codesArrayFiltered.add(new CountryCode(
@@ -67,7 +55,6 @@ public class CountryCodeRepository {
                         countryWorkList.get(i).getDigits(),
                         countryWorkList.get(i).getIso()));
             }
-            System.out.println("if CARL");
         } else {
 
             for (int i = 0; i < countryWorkList.size(); i++) {
@@ -92,7 +79,6 @@ public class CountryCodeRepository {
             }
         }
     }
-//    public TextWatcher getTextWatcher(   -   Как TextWatcher можно использовать из этого класса?
 }
 
 

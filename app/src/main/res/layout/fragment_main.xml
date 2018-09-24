@@ -28,12 +28,12 @@
             android:inputType="phone"
             android:paddingStart="8sp"
             android:textColor="@color/colorText"
-            tools:text="+ 0 0 (000) 000 00 00" />
+            />
 
     </LinearLayout>
 
     <Button
-        android:id="@+id/btn_dialog_fragment"
+        android:id="@+id/btn_df_select_country"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Select a country" />

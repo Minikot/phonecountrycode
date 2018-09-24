@@ -1,13 +1,10 @@
 package com.aleksandr.phonecountrycode;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.aleksandr.phonecountrycode.model.CountryCode;
 
@@ -17,12 +14,10 @@ public class CountryCodeAdapter extends RecyclerView.Adapter<CountryCodeAdapter.
 
     private ArrayList<CountryCode> countryCodes;
     private final CountryItemListener countryItemListener;
-    Context context;
 
-    public CountryCodeAdapter(ArrayList<CountryCode> countryCodes, CountryItemListener countryItemListener, Context context) {
+    public CountryCodeAdapter(ArrayList<CountryCode> countryCodes, CountryItemListener countryItemListener) {
         this.countryCodes = countryCodes;
         this.countryItemListener = countryItemListener;
-        this.context = context;
     }
 
     public CountryCodeAdapter(CountryItemListener countryItemListener) {
@@ -59,15 +54,11 @@ public class CountryCodeAdapter extends RecyclerView.Adapter<CountryCodeAdapter.
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView ivFlagD;
-        TextView tvCountryD;
-        TextView tvCodeD;
+        public CountryCodeView countryCodeView;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            ivFlagD = itemView.findViewById(R.id.iv_dialog_country_flag_adapter);
-            tvCountryD = itemView.findViewById(R.id.tv_dialog_country);
-            tvCodeD = itemView.findViewById(R.id.tv_dialog_code_phone);
+        countryCodeView = itemView.findViewById(R.id.country_code);
 
             itemView.setOnClickListener(v -> {
                 if (countryItemListener != null)
@@ -76,10 +67,7 @@ public class CountryCodeAdapter extends RecyclerView.Adapter<CountryCodeAdapter.
         }
 
         private void bindTo(final CountryCode countryCode) {
-            ivFlagD.setImageResource(countryCode.resId = context.getResources().
-                    getIdentifier("ic_" + countryCode.getIso(), "drawable", context.getPackageName()));
-            tvCountryD.setText(countryCode.getName());
-            tvCodeD.setText("+ " + countryCode.getCode());
+            countryCodeView.setView(countryCode);
         }
     }
 

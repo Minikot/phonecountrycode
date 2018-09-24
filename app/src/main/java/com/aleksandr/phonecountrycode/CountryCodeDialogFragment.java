@@ -1,7 +1,6 @@
 package com.aleksandr.phonecountrycode;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -22,13 +21,16 @@ import java.util.ArrayList;
 
 public class CountryCodeDialogFragment extends DialogFragment {
 
-    EditText etFilterCode;
-    RecyclerView rvCodeList;
-    CountryCodeAdapter adapter;
+    private EditText etFilterCode;
+    private RecyclerView rvCodeList;
+    private CountryCodeAdapter adapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /**
+         * Строка нужна для запуска DialogFragment на весь экран. В styles добавить стиль <style name="YourCustomeThemeName" ...
+         */
         setStyle(DialogFragment.STYLE_NO_TITLE, R.style.YourCustomeThemeName);
     }
 
@@ -46,26 +48,22 @@ public class CountryCodeDialogFragment extends DialogFragment {
         etFilterCode = view.findViewById(R.id.et_filter_code_dialog_fragment);
         etFilterCode.addTextChangedListener(getTextWatcher());
 
-        CountryCodeRepository.getInstance().filterListCodesArray(etFilterCode.getText().toString());
+        CountryCodeRepository.filterListCodesArray(etFilterCode.getText().toString());
 
         rvCodeList = view.findViewById(R.id.rv_phone_code_dialog_fragment);
         adapter = new CountryCodeAdapter(new ArrayList<CountryCode>(), new CountryCodeAdapter.CountryItemListener() {
             @Override
             public void countrySelect(CountryCode countryCode) {
-                CountryCodeRepository.getInstance().getCodesArrayFiltered().removeAll(CountryCodeRepository.getInstance().getCodesArrayFiltered());
+                CountryCodeRepository.getCodesArrayFiltered().removeAll(CountryCodeRepository.getCodesArrayFiltered());
                 onCodeSelectedListener.onChangeCode(countryCode);
                 dismiss();
             }
 
-        }, getContext());
+        });
         rvCodeList.setLayoutManager(new LinearLayoutManager(getContext()));
         rvCodeList.setAdapter(adapter);
 
-        adapter.dataUpdate(CountryCodeRepository.getInstance().getCodesArrayFiltered());
-    }
-
-    public void onDismiss(DialogInterface dialogInterface) {
-        super.onDismiss(dialogInterface);
+        adapter.dataUpdate(CountryCodeRepository.getCodesArrayFiltered());
     }
 
     public interface CodeSelectedListener {
@@ -80,30 +78,26 @@ public class CountryCodeDialogFragment extends DialogFragment {
         if (context instanceof CodeSelectedListener) {
             onCodeSelectedListener = (CodeSelectedListener) context;
         } else {
-            System.out.println("fragment from BaseAuthFragment attached not to AuthNavigator");
+            System.out.println("fragment from BaseAuthFragment attached not to AuthNavigator");     //TODO Change text
         }
     }
 
     public TextWatcher getTextWatcher() {
 
-        TextWatcher textWatcher = new TextWatcher() {
+        return new TextWatcher() {
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                CountryCodeRepository.getInstance().getCodesArrayFiltered().
-                        removeAll(CountryCodeRepository.getInstance().
-                                getCodesArrayFiltered());
+                CountryCodeRepository.getCodesArrayFiltered().removeAll(CountryCodeRepository.getCodesArrayFiltered());
             }
 
             public void afterTextChanged(Editable s) {
-                CountryCodeRepository.getInstance().filterListCodesArray(s.toString());
-                adapter.dataUpdate(CountryCodeRepository.getInstance().getCodesArrayFiltered());
+                CountryCodeRepository.filterListCodesArray(s.toString());
+                adapter.dataUpdate(CountryCodeRepository.getCodesArrayFiltered());
             }
         };
-        return textWatcher;
     }
 
 }

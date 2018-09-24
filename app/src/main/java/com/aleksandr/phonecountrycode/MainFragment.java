@@ -18,11 +18,11 @@ import com.aleksandr.phonecountrycode.model.CountryCode;
 
 public class MainFragment extends Fragment {
 
-    ImageView ivCountryFlag;
-    EditText etCodePhone;
-    Button btnDialogFragment;
+    private ImageView ivCountryFlag;
+    private EditText etCodePhone;
+    private Button btnSelectCountry;
 
-    DialogFragment dlgFragment;
+    private DialogFragment dlgFragment;
 
     @Nullable
     @Override
@@ -31,16 +31,15 @@ public class MainFragment extends Fragment {
 
         ivCountryFlag = view.findViewById(R.id.iv_country_flag_fragment);
         etCodePhone = view.findViewById(R.id.et_code_phone_fragment);
-        etCodePhone.addTextChangedListener(getTextWatcher());
+        ivCountryFlag.setImageResource(R.drawable.ic_flag_black_24dp);
+        btnSelectCountry = view.findViewById(R.id.btn_df_select_country);
+
         dlgFragment = new CountryCodeDialogFragment();
 
-        ivCountryFlag.setImageResource(R.drawable.ic_flag_black_24dp);
+        etCodePhone.addTextChangedListener(getTextWatcher());
 
-        btnDialogFragment = view.findViewById(R.id.btn_dialog_fragment);
-
-        btnDialogFragment.setOnClickListener(v -> {
-            CountryCodeDialogFragment countryCodeDialogFragment = new CountryCodeDialogFragment();
-            countryCodeDialogFragment.show(getChildFragmentManager(), "dialog");
+        btnSelectCountry.setOnClickListener(v -> {
+            dlgFragment.show(getChildFragmentManager(), "dialog");
         });
         return view;
     }
