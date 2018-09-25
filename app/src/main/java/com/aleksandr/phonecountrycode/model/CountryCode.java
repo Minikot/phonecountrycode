@@ -5,7 +5,6 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 
 public class CountryCode {
-
     private String name;
     private int code;
     private ArrayList<Integer> digits;
