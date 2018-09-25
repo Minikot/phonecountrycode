@@ -43,8 +43,7 @@ public class CountryCodeView extends LinearLayout {
     }
 
     public void setView(CountryCode countryCode) {
-        ivFlagView.setImageResource(countryCode.resId = getContext().getResources().
-                getIdentifier("ic_" + countryCode.getIso(), "drawable", getContext().getPackageName()));
+        ivFlagView.setImageResource(countryCode.getResId());
         tvCountryView.setText(countryCode.getName());
         tvCodeView.setText(String.valueOf(countryCode.getCode()));
     }

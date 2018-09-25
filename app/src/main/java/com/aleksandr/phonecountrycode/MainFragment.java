@@ -46,9 +46,7 @@ public class MainFragment extends Fragment {
 
     public void setCode(CountryCode countryCode) {
         etCodePhone.setText("+ " + String.valueOf(countryCode.getCode()));
-        ivCountryFlag.setImageResource(
-                countryCode.resId = getContext().getResources()
-                        .getIdentifier("ic_" + countryCode.getIso(), "drawable", getContext().getPackageName()));
+        ivCountryFlag.setImageResource(countryCode.getResId());
     }
 
     public TextWatcher getTextWatcher() {
@@ -56,7 +54,6 @@ public class MainFragment extends Fragment {
         TextWatcher textWatcher = new TextWatcher() {
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {

@@ -56,6 +56,7 @@ public class CountryCodeDialogFragment extends DialogFragment {
             public void countrySelect(CountryCode countryCode) {
                 CountryCodeRepository.getCodesArrayFiltered().removeAll(CountryCodeRepository.getCodesArrayFiltered());
                 onCodeSelectedListener.onChangeCode(countryCode);
+                etFilterCode.setText("");
                 dismiss();
             }
 

@@ -16,8 +16,7 @@ import java.util.List;
 public class CountryCodeRepository {
 
     private static String jsonData;
-    private static boolean isContain;
-    private static List<CountryCode> countryWorkList;
+    private static List<CountryCode> countryFromJson;
 
     private static ArrayList<CountryCode> codesArrayFiltered = new ArrayList<>();
 
@@ -43,37 +42,45 @@ public class CountryCodeRepository {
         String jsonOutput = jsonData;
         Type listType = new TypeToken<List<CountryCode>>() {
         }.getType();
-        countryWorkList = gson.fromJson(jsonOutput, listType);
+        countryFromJson = gson.fromJson(jsonOutput, listType);
+
+        for (int i = 0; i < countryFromJson.size(); i++) {
+            countryFromJson.get(i).setResId(appContext.getResources().
+                    getIdentifier("ic_" + countryFromJson.get(i).getIso(), "drawable", appContext.getPackageName()));
+        }
     }
 
     public static void filterListCodesArray(String st) {
         if (st.length() == 0) {
-            for (int i = 0; i < countryWorkList.size(); i++) {
+            for (int i = 0; i < countryFromJson.size(); i++) {
                 codesArrayFiltered.add(new CountryCode(
-                        countryWorkList.get(i).getName(),
-                        countryWorkList.get(i).getCode(),
-                        countryWorkList.get(i).getDigits(),
-                        countryWorkList.get(i).getIso()));
+                        countryFromJson.get(i).getName(),
+                        countryFromJson.get(i).getCode(),
+                        countryFromJson.get(i).getDigits(),
+                        countryFromJson.get(i).getIso(),
+                        countryFromJson.get(i).getResId()));
             }
         } else {
-            for (int i = 0; i < countryWorkList.size(); i++) {
+            for (int i = 0; i < countryFromJson.size(); i++) {
+                boolean isContain;
                 try {
                     int num = Integer.parseInt(st);
-                    String code = String.valueOf(countryWorkList.get(i).getCode());
+                    String code = String.valueOf(countryFromJson.get(i).getCode());
                     isContain = code.contains(st);
 
                 } catch (NumberFormatException e) {
-                    String name = countryWorkList.get(i).getName().toLowerCase();
+                    String name = countryFromJson.get(i).getName().toLowerCase();
                     isContain = name.contains(st.toLowerCase());
                 }
 
                 if (isContain) {
                     codesArrayFiltered.add(
                             new CountryCode(
-                                    countryWorkList.get(i).getName(),
-                                    countryWorkList.get(i).getCode(),
-                                    countryWorkList.get(i).getDigits(),
-                                    countryWorkList.get(i).getIso()));
+                                    countryFromJson.get(i).getName(),
+                                    countryFromJson.get(i).getCode(),
+                                    countryFromJson.get(i).getDigits(),
+                                    countryFromJson.get(i).getIso(),
+                                    countryFromJson.get(i).getResId()));
                 }
             }
         }
