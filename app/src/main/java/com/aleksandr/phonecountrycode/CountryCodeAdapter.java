@@ -28,8 +28,8 @@ public class CountryCodeAdapter extends RecyclerView.Adapter<CountryCodeAdapter.
         this.countryCodes.clear();
         if (countryCodes != null) {
             this.countryCodes.addAll(countryCodes);
-            notifyDataSetChanged();
         }
+            notifyDataSetChanged();
     }
 
     @NonNull
