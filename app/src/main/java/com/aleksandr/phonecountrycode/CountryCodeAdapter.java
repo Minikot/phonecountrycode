@@ -25,8 +25,9 @@ public class CountryCodeAdapter extends RecyclerView.Adapter<CountryCodeAdapter.
     }
 
     public void dataUpdate(ArrayList<CountryCode> countryCodes) {
+        this.countryCodes.clear();
         if (countryCodes != null) {
-            this.countryCodes = countryCodes;
+            this.countryCodes.addAll(countryCodes);
             notifyDataSetChanged();
         }
     }
