@@ -48,8 +48,6 @@ public class CountryCodeDialogFragment extends DialogFragment {
         etFilterCode = view.findViewById(R.id.et_filter_code_dialog_fragment);
         etFilterCode.addTextChangedListener(getTextWatcher());
 
-        CountryCodeRepository.filterListCodesArray(etFilterCode.getText().toString());
-
         rvCodeList = view.findViewById(R.id.rv_phone_code_dialog_fragment);
         adapter = new CountryCodeAdapter(new ArrayList<CountryCode>(), new CountryCodeAdapter.CountryItemListener() {
             @Override
@@ -58,12 +56,11 @@ public class CountryCodeDialogFragment extends DialogFragment {
                 etFilterCode.setText("");
                 dismiss();
             }
-
         });
         rvCodeList.setLayoutManager(new LinearLayoutManager(getContext()));
         rvCodeList.setAdapter(adapter);
 
-        adapter.dataUpdate(CountryCodeRepository.filterListCodesArray(etFilterCode.getText().toString()));
+        adapter.dataUpdate(CountryCodeRepository.filterListCodesArray(etFilterCode.getText().toString(), getContext()));
     }
 
     public interface CodeSelectedListener {
@@ -93,8 +90,8 @@ public class CountryCodeDialogFragment extends DialogFragment {
             }
 
             public void afterTextChanged(Editable s) {
-                CountryCodeRepository.filterListCodesArray(s.toString());
-                adapter.dataUpdate(CountryCodeRepository.filterListCodesArray(etFilterCode.getText().toString()));
+                CountryCodeRepository.filterListCodesArray(s.toString(), getContext());
+                adapter.dataUpdate(CountryCodeRepository.filterListCodesArray(etFilterCode.getText().toString(), getContext()));
             }
         };
     }

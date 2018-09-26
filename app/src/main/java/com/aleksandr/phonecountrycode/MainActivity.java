@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import com.aleksandr.phonecountrycode.model.CountryCode;
-import com.aleksandr.phonecountrycode.model.CountryCodeRepository;
 
 public class MainActivity extends AppCompatActivity implements CountryCodeDialogFragment.CodeSelectedListener {
 
@@ -23,8 +22,6 @@ public class MainActivity extends AppCompatActivity implements CountryCodeDialog
 
         ft.add(R.id.container, mainFragment, "mainFragment");
         ft.commit();
-
-        CountryCodeRepository.getCountryFromJson(this);
     }
 
     @Override

@@ -45,8 +45,10 @@ public class CountryCodeRepository {
         }
     }
 
-    public static List<CountryCode> filterListCodesArray(String st) {
+    public static List<CountryCode> filterListCodesArray(String st, Context appContext) {
         ArrayList<CountryCode> filterCode = new ArrayList<>();
+        if (countryFromJson == null) getCountryFromJson(appContext);
+
         if (st.length() == 0) {
             return countryFromJson;
         } else {
