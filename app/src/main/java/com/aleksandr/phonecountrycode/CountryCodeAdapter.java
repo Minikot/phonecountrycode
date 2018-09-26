@@ -9,10 +9,11 @@ import android.view.ViewGroup;
 import com.aleksandr.phonecountrycode.model.CountryCode;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CountryCodeAdapter extends RecyclerView.Adapter<CountryCodeAdapter.ViewHolder> {
 
-    private ArrayList<CountryCode> countryCodes;
+    private List<CountryCode> countryCodes;
     private final CountryItemListener countryItemListener;
 
     public CountryCodeAdapter(ArrayList<CountryCode> countryCodes, CountryItemListener countryItemListener) {
@@ -24,7 +25,7 @@ public class CountryCodeAdapter extends RecyclerView.Adapter<CountryCodeAdapter.
         this.countryItemListener = countryItemListener;
     }
 
-    public void dataUpdate(ArrayList<CountryCode> countryCodes) {
+    public void dataUpdate(List<CountryCode> countryCodes) {
         this.countryCodes.clear();
         if (countryCodes != null) {
             this.countryCodes.addAll(countryCodes);

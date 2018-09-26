@@ -54,7 +54,6 @@ public class CountryCodeDialogFragment extends DialogFragment {
         adapter = new CountryCodeAdapter(new ArrayList<CountryCode>(), new CountryCodeAdapter.CountryItemListener() {
             @Override
             public void countrySelect(CountryCode countryCode) {
-                CountryCodeRepository.getCodesArrayFiltered().removeAll(CountryCodeRepository.getCodesArrayFiltered());
                 onCodeSelectedListener.onChangeCode(countryCode);
                 etFilterCode.setText("");
                 dismiss();
@@ -64,7 +63,7 @@ public class CountryCodeDialogFragment extends DialogFragment {
         rvCodeList.setLayoutManager(new LinearLayoutManager(getContext()));
         rvCodeList.setAdapter(adapter);
 
-        adapter.dataUpdate(CountryCodeRepository.getCodesArrayFiltered());
+        adapter.dataUpdate(CountryCodeRepository.filterListCodesArray(etFilterCode.getText().toString()));
     }
 
     public interface CodeSelectedListener {
@@ -91,12 +90,11 @@ public class CountryCodeDialogFragment extends DialogFragment {
             }
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                CountryCodeRepository.getCodesArrayFiltered().removeAll(CountryCodeRepository.getCodesArrayFiltered());
             }
 
             public void afterTextChanged(Editable s) {
                 CountryCodeRepository.filterListCodesArray(s.toString());
-                adapter.dataUpdate(CountryCodeRepository.getCodesArrayFiltered());
+                adapter.dataUpdate(CountryCodeRepository.filterListCodesArray(etFilterCode.getText().toString()));
             }
         };
     }

@@ -18,12 +18,6 @@ public class CountryCodeRepository {
     private static String jsonData;
     private static List<CountryCode> countryFromJson;
 
-    private static ArrayList<CountryCode> codesArrayFiltered = new ArrayList<>();
-
-    public static ArrayList<CountryCode> getCodesArrayFiltered() {
-        return codesArrayFiltered;
-    }
-
     public static void getCountryFromJson(Context appContext) {
         Resources res = appContext.getResources();
         InputStream is = res.openRawResource(R.raw.e164_country_codes);
@@ -51,34 +45,17 @@ public class CountryCodeRepository {
         }
     }
 
-    public static void filterListCodesArray(String st) {
+    public static List<CountryCode> filterListCodesArray(String st) {
+        ArrayList<CountryCode> filterCode = new ArrayList<>();
         if (st.length() == 0) {
-            for (int i = 0; i < countryFromJson.size(); i++) {
-                codesArrayFiltered.add(new CountryCode(
-                        countryFromJson.get(i).getName(),
-                        countryFromJson.get(i).getCodePlus(),
-                        countryFromJson.get(i).getDigits(),
-                        countryFromJson.get(i).getIso(),
-                        countryFromJson.get(i).getResId()));
-            }
+            return countryFromJson;
         } else {
-            boolean isContain;
             for (int i = 0; i < countryFromJson.size(); i++) {
-                        String name = countryFromJson.get(i).getCodePlus().concat(countryFromJson.get(i).getName()).toLowerCase();
-                        isContain = name.contains(st.toLowerCase());
-
-                if (isContain) {
-                    codesArrayFiltered.add(
-                            new CountryCode(
-                                    countryFromJson.get(i).getName(),
-                                    countryFromJson.get(i).getCodePlus(),
-                                    countryFromJson.get(i).getDigits(),
-                                    countryFromJson.get(i).getIso(),
-                                    countryFromJson.get(i).getResId()));
+                if (countryFromJson.get(i).getCodePlus().concat(countryFromJson.get(i).getName()).toLowerCase().contains(st.toLowerCase())) {
+                    filterCode.add(countryFromJson.get(i));
                 }
             }
+            return filterCode;
         }
     }
 }
-
-
