@@ -47,6 +47,7 @@ public class CountryCodeRepository {
         for (int i = 0; i < countryFromJson.size(); i++) {
             countryFromJson.get(i).setResId(appContext.getResources().
                     getIdentifier("ic_" + countryFromJson.get(i).getIso(), "drawable", appContext.getPackageName()));
+            countryFromJson.get(i).setCodePlus(String.valueOf("+" + countryFromJson.get(i).getCode()));
         }
     }
 
@@ -55,29 +56,22 @@ public class CountryCodeRepository {
             for (int i = 0; i < countryFromJson.size(); i++) {
                 codesArrayFiltered.add(new CountryCode(
                         countryFromJson.get(i).getName(),
-                        countryFromJson.get(i).getCode(),
+                        countryFromJson.get(i).getCodePlus(),
                         countryFromJson.get(i).getDigits(),
                         countryFromJson.get(i).getIso(),
                         countryFromJson.get(i).getResId()));
             }
         } else {
+            boolean isContain;
             for (int i = 0; i < countryFromJson.size(); i++) {
-                boolean isContain;
-                try {
-                    int num = Integer.parseInt(st);
-                    String code = String.valueOf(countryFromJson.get(i).getCode());
-                    isContain = code.contains(st);
-
-                } catch (NumberFormatException e) {
-                    String name = countryFromJson.get(i).getName().toLowerCase();
-                    isContain = name.contains(st.toLowerCase());
-                }
+                        String name = countryFromJson.get(i).getCodePlus().concat(countryFromJson.get(i).getName()).toLowerCase();
+                        isContain = name.contains(st.toLowerCase());
 
                 if (isContain) {
                     codesArrayFiltered.add(
                             new CountryCode(
                                     countryFromJson.get(i).getName(),
-                                    countryFromJson.get(i).getCode(),
+                                    countryFromJson.get(i).getCodePlus(),
                                     countryFromJson.get(i).getDigits(),
                                     countryFromJson.get(i).getIso(),
                                     countryFromJson.get(i).getResId()));

@@ -18,6 +18,7 @@
             android:id="@+id/iv_country_flag_fragment"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:paddingStart="5dp"
             android:layout_gravity="center" />
 
         <EditText
@@ -26,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:inputType="phone"
-            android:paddingStart="8sp"
+            android:paddingStart="16dp"
             android:textColor="@color/colorText"
             />
 

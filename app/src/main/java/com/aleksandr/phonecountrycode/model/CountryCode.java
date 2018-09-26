@@ -11,10 +11,11 @@ public class CountryCode {
     @SerializedName("iso_3166_1")
     private String iso;
     private int resId;
+    private String codePlus;
 
-    public CountryCode(String name, int code, ArrayList<Integer> digits, String iso, int resId) {
+    public CountryCode(String name, String codePlus, ArrayList<Integer> digits, String iso, int resId) {
         this.name = name;
-        this.code = code;
+        this.codePlus = codePlus;
         this.digits = digits;
         this.iso = iso;
         this.resId = resId;
@@ -42,5 +43,13 @@ public class CountryCode {
 
     public void setResId(int resId) {
         this.resId = resId;
+    }
+
+    public void setCodePlus(String codePlus) {
+        this.codePlus = codePlus;
+    }
+
+    public String getCodePlus() {
+        return codePlus;
     }
 }

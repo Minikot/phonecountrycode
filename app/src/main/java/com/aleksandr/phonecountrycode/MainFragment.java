@@ -45,7 +45,7 @@ public class MainFragment extends Fragment {
     }
 
     public void setCode(CountryCode countryCode) {
-        etCodePhone.setText("+ " + String.valueOf(countryCode.getCode()));
+        etCodePhone.setText(countryCode.getCodePlus());
         ivCountryFlag.setImageResource(countryCode.getResId());
     }
 
