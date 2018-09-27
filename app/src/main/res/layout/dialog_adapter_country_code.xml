@@ -4,8 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:background="@color/colorMenuBg"
-    android:paddingStart="8sp"
-    android:paddingEnd="8sp">
+    >
 
     <com.aleksandr.phonecountrycode.CountryCodeView
         android:id="@+id/country_code"

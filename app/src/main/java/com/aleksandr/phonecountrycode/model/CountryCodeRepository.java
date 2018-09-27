@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class CountryCodeRepository {
@@ -43,6 +45,13 @@ public class CountryCodeRepository {
                     getIdentifier("ic_" + countryFromJson.get(i).getIso(), "drawable", appContext.getPackageName()));
             countryFromJson.get(i).setCodePlus(String.valueOf("+" + countryFromJson.get(i).getCode()));
         }
+
+        Collections.sort(countryFromJson, new Comparator<CountryCode>() {
+            @Override
+            public int compare(CountryCode o1, CountryCode o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
     }
 
     public static List<CountryCode> filterListCodesArray(String st, Context appContext) {

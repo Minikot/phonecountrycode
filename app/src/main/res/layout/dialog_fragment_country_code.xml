@@ -5,21 +5,18 @@
     android:orientation="vertical"
     android:background="@color/colorMenuBg">
 
+
     <EditText
         android:id="@+id/et_filter_code_dialog_fragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8sp"
-        android:layout_marginEnd="8sp"
+        android:textColor="@color/colorTextAdapter"
         />
 
 <android.support.v7.widget.RecyclerView
     android:id="@+id/rv_phone_code_dialog_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="8sp"
-    >
-
-</android.support.v7.widget.RecyclerView>
+    />
 
 </LinearLayout>

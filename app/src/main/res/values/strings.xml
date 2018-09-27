@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Phone Country Code</string>
+
+    <!-- Main activity -->
+    <string name="log_in">Log in</string>
+    <string name="HelloDriver">Hello, Driver</string>
+    <string name="MessageForTheDriver">Enter your phone to enter app</string>
+    <string name="Phone">Phone</string>
+    <string name="btn_enter_app">Next</string>
 </resources>

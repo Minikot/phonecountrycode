@@ -12,7 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.aleksandr.phonecountrycode.model.CountryCode;
 
@@ -20,9 +22,9 @@ public class MainFragment extends Fragment {
 
     private ImageView ivCountryFlag;
     private EditText etCodePhone;
-    private Button btnSelectCountry;
-
-    private DialogFragment dlgFragment;
+    private TextView tvCodePhone;
+    private ImageButton ibCountrySelection;
+    private Button btnEnterApp;
 
     @Nullable
     @Override
@@ -31,21 +33,22 @@ public class MainFragment extends Fragment {
 
         ivCountryFlag = view.findViewById(R.id.iv_country_flag_fragment);
         etCodePhone = view.findViewById(R.id.et_code_phone_fragment);
+        tvCodePhone = view.findViewById(R.id.tv_code_phone_fragment);
         ivCountryFlag.setImageResource(R.drawable.ic_flag_black_24dp);
-        btnSelectCountry = view.findViewById(R.id.btn_df_select_country);
+        ibCountrySelection = view.findViewById(R.id.ib_country_selection);
+        btnEnterApp = view.findViewById(R.id.btn_df_select_country);
 
-        dlgFragment = new CountryCodeDialogFragment();
+        tvCodePhone.addTextChangedListener(getTextWatcher());
 
-        etCodePhone.addTextChangedListener(getTextWatcher());
-
-        btnSelectCountry.setOnClickListener(v -> {
+        ibCountrySelection.setOnClickListener(v -> {
+            DialogFragment dlgFragment = new CountryCodeDialogFragment();
             dlgFragment.show(getChildFragmentManager(), "dialog");
         });
         return view;
     }
 
     public void setCode(CountryCode countryCode) {
-        etCodePhone.setText(countryCode.getCodePlus());
+        tvCodePhone.setText(countryCode.getCodePlus());
         ivCountryFlag.setImageResource(countryCode.getResId());
     }
 
@@ -60,7 +63,7 @@ public class MainFragment extends Fragment {
             }
 
             public void afterTextChanged(Editable s) {
-                if (etCodePhone.length() == 0) {
+                if (tvCodePhone.length() == 0) {
                     ivCountryFlag.setImageResource(R.drawable.ic_flag_black_24dp);
                 }
             }
