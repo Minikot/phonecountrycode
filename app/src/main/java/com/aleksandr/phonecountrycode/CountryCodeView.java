@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.aleksandr.phonecountrycode.model.CountryCode;
@@ -15,6 +16,7 @@ public class CountryCodeView extends LinearLayout {
     public ImageView ivFlagView;
     public TextView tvCodeView;
     public TextView tvCountryView;
+    public RadioButton rbChecked;
 
     public CountryCodeView(Context context) {
         this(context, null);
@@ -40,6 +42,7 @@ public class CountryCodeView extends LinearLayout {
         ivFlagView = findViewById(R.id.iv_flag_view);
         tvCodeView = findViewById(R.id.tv_code_view);
         tvCountryView = findViewById(R.id.tv_country_view);
+        rbChecked = findViewById(R.id.rb_checked);
     }
 
     public void setView(CountryCode countryCode) {

@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.aleksandr.phonecountrycode.model.CountryCode;
 import com.aleksandr.phonecountrycode.model.CountryCodeRepository;
@@ -22,8 +23,12 @@ import java.util.ArrayList;
 public class CountryCodeDialogFragment extends DialogFragment {
 
     private EditText etFilterCode;
+    private ImageButton ibBack;
     private RecyclerView rvCodeList;
     private CountryCodeAdapter adapter;
+    private CodeSelectedListener onCodeSelectedListener;
+    private CountryCodeView countryCodeViewInvisible;
+    private CountryCode selectedCountry;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,8 +50,18 @@ public class CountryCodeDialogFragment extends DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        ibBack = view.findViewById(R.id.ib_back_to_main_fragment);
         etFilterCode = view.findViewById(R.id.et_filter_code_dialog_fragment);
         etFilterCode.addTextChangedListener(getTextWatcher());
+        countryCodeViewInvisible = view.findViewById(R.id.country_view_invisible);
+
+        if (selectedCountry != null) {
+            countryCodeViewInvisible.setVisibility(View.VISIBLE);
+            countryCodeViewInvisible.setView(selectedCountry);
+            countryCodeViewInvisible.rbChecked.setChecked(true);
+        }
+
+        ibBack.setOnClickListener(v -> dismiss());
 
         rvCodeList = view.findViewById(R.id.rv_phone_code_dialog_fragment);
         adapter = new CountryCodeAdapter(new ArrayList<CountryCode>(), new CountryCodeAdapter.CountryItemListener() {
@@ -57,6 +72,7 @@ public class CountryCodeDialogFragment extends DialogFragment {
                 dismiss();
             }
         });
+
         rvCodeList.setLayoutManager(new LinearLayoutManager(getContext()));
         rvCodeList.setAdapter(adapter);
 
@@ -66,8 +82,6 @@ public class CountryCodeDialogFragment extends DialogFragment {
     public interface CodeSelectedListener {
         void onChangeCode(CountryCode countryCode);
     }
-
-    private CodeSelectedListener onCodeSelectedListener;
 
     @Override
     public void onAttach(Context context) {
@@ -96,4 +110,7 @@ public class CountryCodeDialogFragment extends DialogFragment {
         };
     }
 
+    public void setSelectedCountry(CountryCode countryCode) {
+        selectedCountry = countryCode;
+    }
 }

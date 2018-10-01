@@ -3,8 +3,13 @@
 
     <!-- Main activity -->
     <string name="log_in">Log in</string>
-    <string name="HelloDriver">Hello, Driver</string>
-    <string name="MessageForTheDriver">Enter your phone to enter app</string>
-    <string name="Phone">Phone</string>
+    <string name="hello_driver">Hello, Driver</string>
+    <string name="message_for_the_driver">Enter your phone to enter app</string>
+    <string name="phone">Phone</string>
     <string name="btn_enter_app">Next</string>
+
+    <!-- Dialog fragment country code -->
+    <string name="top_text_view">Country phone code</string>
+
+
 </resources>
