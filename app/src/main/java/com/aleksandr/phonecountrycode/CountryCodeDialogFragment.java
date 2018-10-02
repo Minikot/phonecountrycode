@@ -61,6 +61,8 @@ public class CountryCodeDialogFragment extends DialogFragment {
             countryCodeViewInvisible.rbChecked.setChecked(true);
         }
 
+        countryCodeViewInvisible.setOnClickListener(v -> dismiss());
+
         ibBack.setOnClickListener(v -> dismiss());
 
         rvCodeList = view.findViewById(R.id.rv_phone_code_dialog_fragment);
