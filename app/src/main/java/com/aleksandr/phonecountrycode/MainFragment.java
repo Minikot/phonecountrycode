@@ -9,8 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.aleksandr.phonecountrycode.model.CountryCode;
@@ -19,8 +19,8 @@ public class MainFragment extends Fragment {
 
     private ImageView ivCountryFlag;
     private TextView tvCodePhone;
-    private ImageButton ibCountrySelection;
     private Button btnEnterApp;
+    private LinearLayout llCountrySelect;
     private CountryCode selectedCountry;
 
     @Nullable
@@ -31,12 +31,12 @@ public class MainFragment extends Fragment {
         ivCountryFlag = view.findViewById(R.id.iv_country_flag_fragment);
         tvCodePhone = view.findViewById(R.id.tv_code_phone_fragment);
         ivCountryFlag.setImageResource(R.drawable.ic_us);
-        ibCountrySelection = view.findViewById(R.id.ib_country_selection);
         btnEnterApp = view.findViewById(R.id.btn_df_select_country);
+        llCountrySelect = view.findViewById(R.id.ll_country_selection);
 
-        ibCountrySelection.setOnClickListener(v -> {
-                DialogFragment dlgFragment = new CountryCodeDialogFragment();
-                dlgFragment.show(getChildFragmentManager(), "dialog");
+        llCountrySelect.setOnClickListener(v -> {
+            DialogFragment dlgFragment = new CountryCodeDialogFragment();
+            dlgFragment.show(getChildFragmentManager(), "dialog");
             ((CountryCodeDialogFragment) dlgFragment).setSelectedCountry(selectedCountry);
         });
         return view;
